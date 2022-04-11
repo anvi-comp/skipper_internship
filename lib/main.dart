@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:forms/viewDesignation.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,6 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Text('View Details', style: TextStyle(color: Colors.black)),
                       onPressed: () {
                         //Do Something
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const viewDesignation(title: '',)),
+                        );
                       },
                     ),
                   )

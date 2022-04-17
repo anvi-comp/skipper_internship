@@ -75,45 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       // optional flex property if flex is 1 because the default flex is 1
                       flex: 1,
-                      child: Container(
-                        padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(3.0)
-                        ),
-                        child: DropdownButton<String>(
-                          //value: dropdownValue,
-                          isExpanded: true,
-                          hint: Text("Department"),
-                          icon: Icon(Icons.keyboard_arrow_down, size: 22),
-                          underline: SizedBox(),
-                          items: <String>['Dept1', 'Dept2', 'Dept3', 'Dept4'].map((String value) {
-                            return new DropdownMenuItem<String>(
-                              value: value,
-                              child: new Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            //Do something with this value
-                            setState(() {
-                              dropdownValue = value!;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 10.0),
-                SizedBox(height: 10.0),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      // optional flex property if flex is 1 because the default flex is 1
-                      flex: 1,
 
                       child: TextFormField(
 
@@ -136,33 +97,51 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                       ),
 
+
                     ),
-
-
-                    // Expanded(
-                    //   // optional flex property if flex is 1 because the default flex is 1
-                    //   flex: 1,
-                    //   child: TextField(
-                    //     decoration: InputDecoration(
-                    //         labelText: 'Name',
-                    //         labelStyle: TextStyle(
-                    //             color: Colors.grey[400]
-                    //         )
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
+
                 SizedBox(height: 10.0),
                 SizedBox(height: 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
+// optional flex property if flex is 1 because the default flex is 1
+                      flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(3.0)
+                        ),
+                        child: DropdownButton<String>(
+//value: dropdownValue,
+                          isExpanded: true,
+                          hint: Text("Department"),
+                          icon: Icon(Icons.keyboard_arrow_down, size: 22),
+                          underline: SizedBox(),
+                          items: <String>['Dept1', 'Dept2', 'Dept3', 'Dept4'].map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+//Do something with this value
+                            setState(() {
+                              dropdownValue = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
                       // optional flex property if flex is 1 because the default flex is 1
                       flex: 1,
                       child: Container(
-                        padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                        padding: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(3.0)
@@ -193,26 +172,36 @@ class _MyHomePageState extends State<MyHomePage> {
                     SizedBox(height: 10.0),
                     //Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
 
-                    Container(
-                      color: Colors.lightBlue,
-                      child: RawMaterialButton(
-                        child: Text('Submit', style: TextStyle(color: Colors.white)),
-                        onPressed: () {
-                          //Do Something
-                        },
-                      ),
-                    ),
+                    // Container(
+                    //   color: Colors.lightBlue,
+                    //   child: RawMaterialButton(
+                    //     child: Text('Submit', style: TextStyle(color: Colors.white)),
+                    //     onPressed: () {
+                    //       //Do Something
+                    //     },
+                    //   ),
+                    // ),
                   ],
+
                 ),
+                Container(
+                    margin: const EdgeInsets.all(40),
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              alignment: Alignment.centerRight,
+                              fixedSize: const Size(150, 20),
+                            ),
+                            onPressed: () {},
+                            child: const Align(
+                              child: Text('Submit'),
+                            )))),
+              ]
 
-
-
-            ],
-          )]
-          ),
-        )
-    )
-
+            ),
+          ])
+      ))
     );
   }
 }

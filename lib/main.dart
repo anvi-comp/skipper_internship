@@ -1,188 +1,210 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+/// The application that contains datagrid on it.
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Form Widgets',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(),
+      title: 'Syncfusion DataGrid Demo',
+      theme:
+      ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light),
+      home: JsonDataGrid(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class JsonDataGrid extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _JsonDataGridState createState() => _JsonDataGridState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _JsonDataGridState extends State<JsonDataGrid> {
+  late _JsonDataGridSource jsonDataGridSource;
+  List<_Product> productlist = [];
 
+  Future generateProductList() async {
+    var response = await http.get(Uri.parse(
+        'https://2d6a-45-118-158-144.ngrok.io/documents'));
+    var list = json.decode(response.body).cast<Map<String, dynamic>>();
+    productlist =
+    await list.map<_Product>((json) => _Product.fromJson(json)).toList();
+    jsonDataGridSource = _JsonDataGridSource(productlist);
+    return productlist;
+  }
 
-  String dropdownValue = 'Dept1';
-  String dropdownValue2 = 'Active';
+  List<GridColumn> getColumns() {
+    List<GridColumn> columns;
+    columns = ([
+      GridColumn(
+        columnName: 'departmentID',
+        width: 70,
+        label: Container(
+          padding: EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'departmentID',
+            overflow: TextOverflow.clip,
+            softWrap: true,
+          ),
+        ),
+      ),
+      GridColumn(
+        columnName: 'departmentName',
+        width: 95,
+        label: Container(
+          padding: EdgeInsets.all(8),
+          alignment: Alignment.centerRight,
+          child: Text(
+            'departmentName',
+            overflow: TextOverflow.clip,
+            softWrap: true,
+          ),
+        ),
+      ),
+      GridColumn(
+        columnName: 'description',
+        width: 95,
+        label: Container(
+          padding: EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'description',
+            overflow: TextOverflow.clip,
+            softWrap: true,
+          ),
+        ),
+      ),
+      GridColumn(
+        columnName: 'status',
+        width: 70,
+        label: Container(
+          padding: EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          child: Text('status'),
+        ),
+      )
+    ]);
+    return columns;
+  }
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Designation'),
-        ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-              padding: EdgeInsets.only(top: 10.0, bottom: 5.0, left: 50.0, right: 50.0),
-              child: Column(children: [
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Container(
-                    color: Colors.lightGreenAccent,
-                    child: RawMaterialButton(
-                      child: Text('View Details', style: TextStyle(color: Colors.black)),
-                      onPressed: () {
-                        //Do Something
-                      },
-                    ),
-                  )
-                ]),
-                //Text('TextFormField'),
-                SizedBox(height: 10.0),
-                TextFormField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      hintText: 'Department Name',
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 32.0),
-                          borderRadius: BorderRadius.circular(5.0)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                          borderRadius: BorderRadius.circular(5.0)
-                      )
+      appBar: AppBar(
+        title: Text('Flutter DataGrid Sample'),
+      ),
+      body: Container(
+          child: FutureBuilder(
+              future: generateProductList(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                return snapshot.hasData
+                    ? SfDataGrid(
+                    source: jsonDataGridSource, columns: getColumns())
+                    : Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
                   ),
-                  onChanged: (value) {
-                    //Do something with this value
-                  },
-                ),
-
-                //Text('TextFormField'),
-                SizedBox(height: 10.0),
-                TextFormField(
-                  keyboardType: TextInputType.text,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                      hintText: 'Description',
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 32.0),
-                          borderRadius: BorderRadius.circular(5.0)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                          borderRadius: BorderRadius.circular(5.0)
-                      )
-
-                  ),
-                  onChanged: (value) {
-                    //Do something with this value
-                  },
-                ),
-                SizedBox(height: 10.0),
-
-                SizedBox(height: 10.0),
-                //Text('DropDown Button'),
-                SizedBox(height: 10.0),
-
-
-                  Container(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(3.0)
-                  ),
-                  child: DropdownButton<String>(
-                    //value: dropdownValue,
-                    isExpanded: true,
-                    hint: Text("Department"),
-                    icon: Icon(Icons.keyboard_arrow_down, size: 22),
-                    underline: SizedBox(),
-                    items: <String>['Dept1', 'Dept2', 'Dept3', 'Dept4'].map((String value) {
-                      return new DropdownMenuItem<String>(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      //Do something with this value
-                      setState(() {
-                        dropdownValue = value!;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(height: 10.0),
-
-                SizedBox(height: 10.0),
-                //Text('DropDown Button'),
-                SizedBox(height: 10.0),
-
-
-                Container(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(3.0)
-                  ),
-                  child: DropdownButton<String>(
-                    //value: dropdownValue2,
-                    hint: Text("Status"),
-                    isExpanded: true,
-                    icon: Icon(Icons.keyboard_arrow_down, size: 22),
-                    underline: SizedBox(),
-                    items: <String>['Active','Not-Active'].map((String value) {
-                      return new DropdownMenuItem<String>(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      //Do something with this value
-                      setState(() {
-                        dropdownValue = value!;
-                      });
-                    },
-                  ),
-                ),
-
-
-
-
-                SizedBox(height: 10.0),
-                //Text('Buttons'),
-                SizedBox(height: 10.0),
-                //Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-
-                  Container(
-                    color: Colors.lightBlue,
-                    child: RawMaterialButton(
-                      child: Text('Submit', style: TextStyle(color: Colors.white)),
-                      onPressed: () {
-                        //Do Something
-                      },
-                    ),
-                  )
-                //])
-              ])
-          ),
-        )
+                );
+              })),
     );
+  }
+}
+
+class _Product {
+  factory _Product.fromJson(Map<String, dynamic> json) {
+    return _Product(
+      departmentID: json['departmentID'],
+      departmentName: json['departmentName'],
+      description: json['description'],
+      status: json['status'],
+    );
+  }
+
+  _Product(
+      {this.departmentID,
+        this.departmentName,
+        this.description,
+        this.status,
+      });
+  int? departmentID;
+  String? departmentName;
+  String? description;
+  String? status;
+
+}
+
+class _JsonDataGridSource extends DataGridSource {
+  _JsonDataGridSource(this.productlist) {
+    buildDataGridRow();
+  }
+
+  List<DataGridRow> dataGridRows = [];
+  List<_Product> productlist = [];
+
+  void buildDataGridRow() {
+    dataGridRows = productlist.map<DataGridRow>((dataGridRow) {
+      return DataGridRow(cells: [
+        DataGridCell<int>(columnName: 'departmentID', value: dataGridRow.departmentID),
+        DataGridCell<String>(
+            columnName: 'departmentName', value: dataGridRow.departmentName),
+        DataGridCell<String>(
+            columnName: 'description', value: dataGridRow.description),
+        DataGridCell<String>(columnName: 'status', value: dataGridRow.status),
+      ]);
+    }).toList(growable: false);
+  }
+
+  @override
+  List<DataGridRow> get rows => dataGridRows;
+
+  @override
+  DataGridRowAdapter buildRow(DataGridRow row) {
+    return DataGridRowAdapter(cells: [
+      Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[0].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[1].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[2].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[3].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    ]);
   }
 }

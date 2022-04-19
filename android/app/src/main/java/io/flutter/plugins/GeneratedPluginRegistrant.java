@@ -15,5 +15,15 @@ import io.flutter.embedding.engine.FlutterEngine;
 public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
+    try {
+      flutterEngine.getPlugins().add(new com.example.bs_flutter_datatable.BsFlutterDatatablePlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin bs_flutter_datatable, com.example.bs_flutter_datatable.BsFlutterDatatablePlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.example.bs_flutter_utils.BsFlutterUtilsPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin bs_flutter_utils, com.example.bs_flutter_utils.BsFlutterUtilsPlugin", e);
+    }
   }
 }

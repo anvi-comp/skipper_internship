@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.15)
-project(datagrid_json_datasource LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.14)
+project(forms LANGUAGES CXX)
 
-set(BINARY_NAME "datagrid_json_datasource")
+set(BINARY_NAME "forms")
 
 cmake_policy(SET CMP0063 NEW)
 

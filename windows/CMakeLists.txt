@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.14)
-project(forms LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.15)
+project(datagrid_editing LANGUAGES CXX)
 
-set(BINARY_NAME "forms")
+set(BINARY_NAME "datagrid_editing")
 
 cmake_policy(SET CMP0063 NEW)
 

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.forms">
+    package="com.example.api_state_district">
    <application
-        android:label="forms"
+        android:label="api_state_district"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

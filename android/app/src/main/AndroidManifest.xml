@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.forms">
+    package="com.example.apis_and_model">
    <application
-        android:label="forms"
+        android:label="apis_and_model"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

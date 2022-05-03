@@ -1,34 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:retry_forms/documentPage.dart';
+import 'package:retry_forms/department.dart';
+import 'package:retry_forms/kpi.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class blogCategory extends StatefulWidget {
+  const blogCategory({Key? key, required String title}) : super(key: key);
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Form Widgets',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(),
-    );
-  }
+  _BlogCategoryFormState createState() => _BlogCategoryFormState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-
+class _BlogCategoryFormState extends State<blogCategory> {
   String dropdownValue = 'Dept1';
   String dropdownValue2 = 'Active';
 
@@ -37,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Designation'),
+          title: Text('Blog Category'),
         ),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -57,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: TextFormField(
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
-                                    hintText: 'Department Name',
+                                    hintText: 'Blog Category Name',
                                     border: OutlineInputBorder(
                                         borderSide: BorderSide(color: Colors.grey, width: 32.0),
                                         borderRadius: BorderRadius.circular(5.0)
@@ -70,72 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 onChanged: (value) {
                                   //Do something with this value
                                 },
-                              ),
-                            ),
-                            SizedBox(width: 10.0),
-                            Expanded(
-                              // optional flex property if flex is 1 because the default flex is 1
-                              flex: 1,
-
-                              child: TextFormField(
-
-                                keyboardType: TextInputType.text,
-                                maxLines: 4,
-                                decoration: InputDecoration(
-                                    hintText: 'Description',
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.grey, width: 32.0),
-                                        borderRadius: BorderRadius.circular(5.0)
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                                        borderRadius: BorderRadius.circular(5.0)
-                                    )
-
-                                ),
-                                onChanged: (value) {
-                                  //Do something with this value
-                                },
-                              ),
-
-
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: 10.0),
-                        SizedBox(height: 10.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-// optional flex property if flex is 1 because the default flex is 1
-                              flex: 1,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey ),
-                                    borderRadius: BorderRadius.circular(5.0)
-                                ),
-                                child: DropdownButton<String>(
-//value: dropdownValue,
-                                  isExpanded: true,
-                                  hint: Text("Department"),
-                                  icon: Icon(Icons.keyboard_arrow_down, size: 22),
-                                  underline: SizedBox(),
-                                  items: <String>['Dept1', 'Dept2', 'Dept3', 'Dept4'].map((String value) {
-                                    return new DropdownMenuItem<String>(
-                                      value: value,
-                                      child: new Text(value),
-                                    );
-                                  }).toList(),
-                                  onChanged: (value) {
-//Do something with this value
-                                    setState(() {
-                                      dropdownValue = value!;
-                                    });
-                                  },
-                                ),
                               ),
                             ),
                             SizedBox(width: 10.0),
@@ -169,6 +85,44 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+
+                        SizedBox(height: 10.0),
+                        SizedBox(height: 10.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(width: 10.0),
+                            Expanded(
+                              // optional flex property if flex is 1 because the default flex is 1
+                              flex: 1,
+
+                              child: TextFormField(
+
+                                keyboardType: TextInputType.text,
+                                maxLines: 4,
+                                decoration: InputDecoration(
+                                    hintText: 'Description',
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.grey, width: 32.0),
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    )
+
+                                ),
+                                onChanged: (value) {
+                                  //Do something with this value
+                                },
+                              ),
+
+
+                            ),
+                            SizedBox(width: 10.0),
+
                             SizedBox(height: 10.0),
                             //Text('Buttons'),
                             SizedBox(height: 10.0),
@@ -198,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     onPressed: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => const documentPage(title: '',)),
+                                        MaterialPageRoute(builder: (context) => const department(title: '',)),
                                       );
                                     },
                                     child: const Align(
@@ -211,4 +165,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ))
     );
   }
+
 }
+
